@@ -1,0 +1,12 @@
+body{
+  font-family: sans-serif;
+  background-color: rgb(188, 242, 224);
+}
+
+#heading{
+  padding-left: 20px;
+  background-color: rgb(240, 212, 176);
+  border-radius: 10px;
+  font-size: 50px;
+  font-weight: 300;
+}
