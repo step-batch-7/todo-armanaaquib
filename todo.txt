@@ -1,4 +1,4 @@
-will create an home page with TODO heading
+--done-- will create an home page with TODO heading
 
 Structure:
 [
@@ -12,3 +12,6 @@ Structure:
     ]
   }
 ]
+
+--done--will arrange the folder and files
+--done--will add server
