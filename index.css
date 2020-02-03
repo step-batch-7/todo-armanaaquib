@@ -22,7 +22,7 @@ body{
 }
 
 #title-text{
-  width: 3000px;
+  width: 300px;
   height: 30px;
   border: none;
   outline: none;
@@ -30,8 +30,34 @@ body{
   font-size: 20px;
 }
 
-.todo{
+.nav-item{
+  color: rgb(164, 171, 177);
+  margin-top: 5px;
+  padding-left: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.todo-container{
   border: 1px solid black;
   border-left: none;
-  width: 1200px;
+  width: 800px;
+  padding: 50px;
+}
+
+#task-text{
+  width: 500px;
+  height: 20px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid darkseagreen;
+  font-size: 15px;
+}
+
+.task{
+  font-size: 20px;
+}
+
+.delete-link{
+  font-size: 15px;
 }

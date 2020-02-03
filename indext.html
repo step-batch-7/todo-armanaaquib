@@ -9,10 +9,28 @@
   <h1 id="heading">TODO</h1>
   <div class="container">
     <div class="nav">
-      <input id="title-text" type="text" placeholder=" Enter Title" required>
+      <input id='title-text' type="text" placeholder=" Enter Title" required>
+      <div id="nav-items">
+        <h2 class="nav-item">TODO ONE</h2>
+        <h2 class="nav-item">TODO TWO</h2>
+        <h2 class="nav-item">TODO THREE</h2>
+        <h2 class="nav-item">TODO FOUR</h2>
+      </div>
     </div>
-    <div class="todo">
-
+    <div class="todo-container">
+      <div class="task" id="task-1">
+        <input class="tick-mark" type="checkbox">
+        <label>have to make todo</label>
+        <a class='delete-link' href="">Delete</a>
+      </div>
+      <br>
+      <div class="task" id="task-1">
+        <input class="tick-mark" type="checkbox">
+        <label>have to make todo nice and functional</label>
+        <a class='delete-link' href="">Delete</a>
+      </div>
+      <br>
+      <input id="task-text" type="text" placeholder=" Enter Task" required>
     </div>
   </div>
 </body>
