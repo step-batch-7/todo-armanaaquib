@@ -22,12 +22,18 @@ body{
 }
 
 #title-text{
-  width: 300px;
+  width: 220px;
   height: 30px;
   border: none;
   outline: none;
   border-bottom: 2px solid darkseagreen;
   font-size: 20px;
+}
+
+#title-button{
+  font-size: 15px;
+  outline: none;
+  border-radius: 5px;
 }
 
 .nav-item{
@@ -46,7 +52,7 @@ body{
 }
 
 #task-text{
-  width: 500px;
+  width: 400px;
   height: 20px;
   border: none;
   outline: none;
