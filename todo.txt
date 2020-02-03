@@ -15,3 +15,5 @@ Structure:
 
 --done--will arrange the folder and files
 --done--will add server
+will add todo title on clicking add title
+will create an object and will push in todo list

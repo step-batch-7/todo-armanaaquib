@@ -3,29 +3,31 @@
 <head>
   <title>TODO</title>
   <link rel="stylesheet" href="css/index.css">
+  <script src="js/todo.js"></script>
 </head>
 
 <body>
   <h1 id="heading">TODO</h1>
   <div class="container">
     <div class="nav">
-      <input id="title-text" type="text" placeholder=" Enter Title" required>
-      <input id="title-button" type="button" value="Add Title" />
+      <input id="title-text" type="text" placeholder=" Enter Title">
+      <input id="title-button" type="button" value="Add Title"
+        onclick="addTitle()" />
       <div id="nav-items">
         <!-- <h2 class="nav-item">TODO ONE</h2> -->
       </div>
     </div>
     <div class="todo-container">
-      <div class="task" id="task-1">
-        <div id="tasks">
+      <div id="tasks">
+        <!-- <div class="task" id="task-1">
           <input class="tick-mark" type="checkbox">
           <label>have to make todo</label>
           <a class='delete-link' href="">Delete</a>
         </div>
-        <br>
+        <br> -->
       </div>
-      <input id="task-text" type="text" placeholder=" Enter Task" required>
-      <input id="task-button" type="button" value="Add Task" />
+      <!-- <input id="task-text" type="text" placeholder=" Enter Task" required>
+      <input id="task-button" type="button" value="Add Task" /> -->
     </div>
   </div>
 </body>
