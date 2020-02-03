@@ -1,1 +1,15 @@
 will create an home page with TODO heading
+
+Structure:
+[
+  {
+    title: 'Todo Title',
+    id: 'title-1',
+    time: 2020-02-03T05:36:37.296Z,
+    todoList: [
+      {task:'task one', id:'task1', status: false},
+      {task:'task two', id:'task2', status: false},
+    ]
+  }
+]
+

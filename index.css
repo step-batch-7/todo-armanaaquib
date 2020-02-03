@@ -1,12 +1,37 @@
 body{
   font-family: sans-serif;
-  background-color: rgb(188, 242, 224);
 }
 
 #heading{
   padding-left: 20px;
-  background-color: rgb(240, 212, 176);
-  border-radius: 10px;
   font-size: 50px;
   font-weight: 300;
+  border-bottom: 1px solid black;
+}
+
+.container{
+  display: flex;
+}
+
+.nav{
+  border: 1px solid rgb(201, 201, 201);
+  height: 550px;
+  width: 300px;
+  overflow: scroll;
+  padding-top: 20px;
+}
+
+#title-text{
+  width: 3000px;
+  height: 30px;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid darkseagreen;
+  font-size: 20px;
+}
+
+.todo{
+  border: 1px solid black;
+  border-left: none;
+  width: 1200px;
 }
