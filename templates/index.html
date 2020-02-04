@@ -3,30 +3,22 @@
 <head>
   <title>TODO</title>
   <link rel="stylesheet" href="css/index.css">
+  <script src="js/webRequests.js"></script>
+  <script src="js/todoList.js"></script>
   <script src="js/todo.js"></script>
 </head>
 
-<body>
+<body onload="updateTitleItems();">
   <h1 id="heading">TODO</h1>
   <div class="container">
     <div class="nav">
       <input id="title-text" type="text" placeholder=" Enter Title">
       <input id="title-button" type="button" value="Add Title"
-        onclick="addTitle()" />
+        onclick="addTodo();">
       <div id="nav-items">
       </div>
     </div>
     <div class="todo-container">
-      <div id="tasks">
-        <!-- <div class="task" id="task-1">
-          <input class="tick-mark" type="checkbox">
-          <label>have to make todo</label>
-          <a class='delete-link' href="">Delete</a>
-        </div>
-        <br> -->
-      </div>
-      <!-- <input id="task-text" type="text" placeholder=" Enter Task" required>
-      <input id="task-button" type="button" value="Add Task" /> -->
     </div>
   </div>
 </body>

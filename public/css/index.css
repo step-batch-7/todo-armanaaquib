@@ -17,7 +17,6 @@ body{
   border: 1px solid rgb(201, 201, 201);
   height: 550px;
   width: 300px;
-  overflow: scroll;
   padding-top: 20px;
 }
 
@@ -34,6 +33,11 @@ body{
   font-size: 15px;
   outline: none;
   border-radius: 5px;
+}
+
+#nav-items{  
+  overflow: scroll;
+  height: 520px;
 }
 
 .nav-item{
