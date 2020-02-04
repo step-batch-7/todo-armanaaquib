@@ -15,5 +15,9 @@ Structure:
 
 --done--will arrange the folder and files
 --done--will add server
-will add todo title on clicking add title
-will create an object and will push in todo list
+
+--done--will add todo title on clicking add title
+--done--will create an object and will push in todo list
+
+will fetch data from server after todo gets created
+and will render it to page
