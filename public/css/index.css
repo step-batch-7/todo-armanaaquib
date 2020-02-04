@@ -48,7 +48,7 @@ body{
   cursor: pointer;
 }
 
-.todo-container{
+#todo-container{
   border: 1px solid black;
   border-left: none;
   width: 800px;

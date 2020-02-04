@@ -1,11 +1,11 @@
-const renderTitleItems = function (todoList) {
-  document.querySelector('#nav-items').innerHTML = todoList.titlesHtml();
+const render = function (identifier, html) {
+  document.querySelector(identifier).innerHTML = html;
 };
 
 const updateTitleItems = function () {
   sendGetRequest('todoList', (responseText) => {
     const todoList = TodoList.load(responseText);
-    renderTitleItems(todoList);
+    render('#nav-items', todoList.titlesHtml());
   });
 }
 
@@ -21,3 +21,14 @@ const addTodo = function () {
 
   sendPostRequest('addTodo', titleText, 'text/plain', updateTitleItems);
 };
+
+const showTasks = function (event) {
+  console.log('hi');
+  const titleElement = event.target;
+  const title = titleElement.innerText;
+
+  sendGetRequest('todoList', (responseText) => {
+    const todoList = TodoList.load(responseText);
+    render('#todo-container', todoList.tasksHtml(title));
+  });
+}

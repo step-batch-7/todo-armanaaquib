@@ -19,5 +19,7 @@ Structure:
 --done--will add todo title on clicking add title
 --done--will create an object and will push in todo list
 
-will fetch data from server after todo gets created
+--done--will fetch data from server after todo gets created
 and will render it to page
+
+--done--will render tasks according to which todo gets clicked
