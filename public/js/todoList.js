@@ -31,10 +31,13 @@ class TodoList {
   tasksHtml(title) {
     const todo = this.todoList.find((todo) => todo.title === title);
 
-    const newTaskHtml = `
+    const addTaskHtml = `
     <input id="task-text" type="text" placeholder=" Enter Task" required>
     <input id="task-button" type="button" value="Add Task" />`;
 
-    return todo.tasks.map((task) => taskHtml(task)).join('') + newTaskHtml;
+    const tasksHtml = todo.tasks ?
+      todo.tasks.map((task) => taskHtml(task)).join('') : [];
+
+    return tasksHtml + addTaskHtml;
   }
 }
