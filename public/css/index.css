@@ -71,3 +71,7 @@ body{
 .delete-link{
   font-size: 15px;
 }
+
+.clicked{
+  background-color: rgb(235, 216, 190);
+}

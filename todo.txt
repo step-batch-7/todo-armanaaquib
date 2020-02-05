@@ -24,4 +24,6 @@ and will render it to page
 
 --done--will render tasks according to which todo gets clicked
 
-will give id to todo while adding
+--done--will give id to todo while adding
+
+will add task

@@ -9,7 +9,10 @@ const taskHtml = function (task) {
 };
 
 const titleHtml = function (todo) {
-  return `<h2 class="nav-item" id="${todo.id}">${todo.title}</h2>`;
+  return `
+  <h2 class="nav-item" id="${todo.id}" onclick="clickedTodo(event);">
+    ${todo.title}
+  </h2>`;
 };
 
 class TodoList {
@@ -33,7 +36,7 @@ class TodoList {
 
     const addTaskHtml = `
     <input id="task-text" type="text" placeholder=" Enter Task" required>
-    <input id="task-button" type="button" value="Add Task" />`;
+    <input id="task-button" type="button" value="Add Task" onclick="addTask();"/>`;
 
     const tasksHtml = todo.tasks ?
       todo.tasks.map((task) => taskHtml(task)).join('') : '';

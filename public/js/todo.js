@@ -1,11 +1,16 @@
-const render = function (identifier, html) {
-  document.querySelector(identifier).innerHTML = html;
+const render = function (id, html) {
+  document.querySelector(`#${id}`).innerHTML = html;
+};
+
+const removeClassFromAll = function (className) {
+  const elements = document.querySelectorAll(`.${className}`);
+  elements.forEach((element) => element.classList.remove(className));
 };
 
 const updateTitleItems = function () {
   sendGetRequest('todoList', (responseText) => {
     const todoList = TodoList.load(responseText);
-    render('#nav-items', todoList.titlesHtml());
+    render('nav-items', todoList.titlesHtml());
   });
 };
 
@@ -22,12 +27,19 @@ const addTodo = function () {
   sendPostRequest('addTodo', titleText, 'text/plain', updateTitleItems);
 };
 
-const showTasks = function (event) {
-  const titleElement = event.target;
-  const todoId = titleElement.id;
-
+const showTasks = function (todoId) {
   sendGetRequest('todoList', (responseText) => {
     const todoList = TodoList.load(responseText);
-    render('#todo-container', todoList.tasksHtml(todoId));
+    render('todo-container', todoList.tasksHtml(todoId));
   });
+};
+
+const clickedTodo = function (event) {
+  const todoElement = event.target;
+
+  removeClassFromAll('clicked');
+  todoElement.classList.add('clicked');
+
+  const todoId = todoElement.id;
+  showTasks(todoId);
 };
