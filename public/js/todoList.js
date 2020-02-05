@@ -3,16 +3,17 @@ const taskHtml = function (task) {
   <div class="task" id="${task.id}">
     <input class="tick-mark" type="checkbox" ${task.status ? 'checked' : ''}>
     <label>${task.text}</label>
-    <a class='delete-link' href="">Delete</a>
+    <a class='delete-link' onclick="removeTask(event)">Remove</a>
   </div>
   <br>`;
 };
 
 const titleHtml = function (todo) {
   return `
-  <h2 class="nav-item" id="${todo.id}" onclick="clickedTodo(event);">
-    ${todo.title}
-  </h2>`;
+  <div class="nav-item" id="${todo.id}">
+    <h2 class="todo-title" onclick="clickedTodo(event);">${todo.title}</h2>
+    <a class='delete-link' onclick="removeTodo(event)">X</a>
+  </div>`;
 };
 
 class TodoList {

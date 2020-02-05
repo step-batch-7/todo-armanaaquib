@@ -19,7 +19,6 @@ const addTodo = function () {
   const titleText = titleElement.value;
 
   if (titleText === '') {
-    alert('Please Enter Title');
     return;
   }
   titleElement.value = '';
@@ -35,7 +34,7 @@ const showTasks = function (todoId) {
 };
 
 const clickedTodo = function (event) {
-  const todoElement = event.target;
+  const todoElement = event.target.parentElement;
 
   removeClassFromAll('clicked');
   todoElement.classList.add('clicked');
@@ -49,7 +48,6 @@ const addTask = function () {
   const taskText = taskElement.value;
 
   if (taskText === '') {
-    alert('Please Enter Task');
     return;
   }
 
@@ -60,3 +58,9 @@ const addTask = function () {
   sendPostRequest('addTask', requestText, 'application/json', () => showTasks(todoId));
 };
 
+const removeTodo = function (event) {
+  const todoElement = event.target.parentElement;
+  const todoId = todoElement.id;
+  document.querySelector('#todo-Container').innerHTML = '';
+  sendPostRequest('removeTodo', todoId, 'text/plain', updateTitleItems);
+}

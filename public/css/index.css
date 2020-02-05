@@ -41,11 +41,21 @@ body{
 }
 
 .nav-item{
-  color: rgb(164, 171, 177);
-  margin-top: 5px;
   padding-left: 10px;
-  margin-bottom: 5px;
+  height: 50px;
+  width: 295px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-item a{
+  padding: 0 20px;
+}
+
+.todo-title{
   cursor: pointer;
+  color: rgb(164, 171, 177);
 }
 
 #todo-container{
@@ -70,6 +80,7 @@ body{
 
 .delete-link{
   font-size: 15px;
+  cursor: pointer;
 }
 
 .clicked{
