@@ -43,3 +43,20 @@ const clickedTodo = function (event) {
   const todoId = todoElement.id;
   showTasks(todoId);
 };
+
+const addTask = function () {
+  const taskElement = document.querySelector('#task-text');
+  const taskText = taskElement.value;
+
+  if (taskText === '') {
+    alert('Please Enter Task');
+    return;
+  }
+
+  const clickedTodo = document.querySelector('.clicked');
+  const todoId = clickedTodo.id;
+  const requestText = JSON.stringify({todoId, taskText});
+
+  sendPostRequest('addTask', requestText, 'application/json', () => showTasks(todoId));
+};
+
