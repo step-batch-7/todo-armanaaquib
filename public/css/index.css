@@ -81,6 +81,7 @@ body{
 .delete-link{
   font-size: 15px;
   cursor: pointer;
+  color: rgb(155, 166, 228);
 }
 
 .clicked{

@@ -63,4 +63,35 @@ const removeTodo = function (event) {
   const todoId = todoElement.id;
   document.querySelector('#todo-Container').innerHTML = '';
   sendPostRequest('removeTodo', todoId, 'text/plain', updateTitleItems);
+};
+
+const removeTask = function (event) {
+  const taskElement = event.target.parentElement;
+  const taskId = taskElement.id;
+
+  const clickedTodo = document.querySelector('.clicked');
+  const todoId = clickedTodo.id;
+
+  const requestText = JSON.stringify({todoId, taskId});
+
+  sendPostRequest('removeTask', requestText, 'application/json', () => showTasks(todoId));
+};
+
+const updateStatus = function (event) {
+  const statusElement = event.target;
+
+  const taskElement = statusElement.parentElement;
+  const taskId = taskElement.id;
+
+  const clickedTodo = document.querySelector('.clicked');
+  const todoId = clickedTodo.id;
+
+  let status = false;
+  if (statusElement.checked) {
+    status = true;
+  }
+
+  const requestText = JSON.stringify({todoId, taskId, status});
+
+  sendPostRequest('updateTaskStatus', requestText, 'application/json', () => showTasks(todoId));
 }

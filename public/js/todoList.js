@@ -1,7 +1,7 @@
 const taskHtml = function (task) {
   return `
   <div class="task" id="${task.id}">
-    <input class="tick-mark" type="checkbox" ${task.status ? 'checked' : ''}>
+    <input type="checkbox" ${task.status ? 'checked' : ''} onclick="updateStatus(event);">
     <label>${task.text}</label>
     <a class='delete-link' onclick="removeTask(event)">Remove</a>
   </div>
