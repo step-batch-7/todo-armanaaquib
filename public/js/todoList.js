@@ -9,7 +9,7 @@ const taskHtml = function (task) {
 };
 
 const titleHtml = function (todo) {
-  return `<h2 class="nav-item">${todo.title}</h2>`;
+  return `<h2 class="nav-item" id="${todo.id}">${todo.title}</h2>`;
 };
 
 class TodoList {
@@ -28,15 +28,15 @@ class TodoList {
     return reverseTodoList.map((todo) => titleHtml(todo)).join('');
   }
 
-  tasksHtml(title) {
-    const todo = this.todoList.find((todo) => todo.title === title);
+  tasksHtml(id) {
+    const todo = this.todoList.find((todo) => todo.id === id);
 
     const addTaskHtml = `
     <input id="task-text" type="text" placeholder=" Enter Task" required>
     <input id="task-button" type="button" value="Add Task" />`;
 
     const tasksHtml = todo.tasks ?
-      todo.tasks.map((task) => taskHtml(task)).join('') : [];
+      todo.tasks.map((task) => taskHtml(task)).join('') : '';
 
     return tasksHtml + addTaskHtml;
   }

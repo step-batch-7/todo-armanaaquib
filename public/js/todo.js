@@ -24,10 +24,10 @@ const addTodo = function () {
 
 const showTasks = function (event) {
   const titleElement = event.target;
-  const title = titleElement.innerText;
+  const todoId = titleElement.id;
 
   sendGetRequest('todoList', (responseText) => {
     const todoList = TodoList.load(responseText);
-    render('#todo-container', todoList.tasksHtml(title));
+    render('#todo-container', todoList.tasksHtml(todoId));
   });
 };
