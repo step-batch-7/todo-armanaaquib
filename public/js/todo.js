@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 const render = function (id, html) {
   document.querySelector(`#${id}`).innerHTML = html;
 };
@@ -7,27 +9,22 @@ const removeClassFromAll = function (className) {
   elements.forEach((element) => element.classList.remove(className));
 };
 
+const todoList = new TodoList();
+
 const showTasks = function (todoId) {
-  sendGetRequest('todoList', (responseText) => {
-    const todoList = TodoList.load(responseText);
-    render('todo-container', todoList.tasksHtml(todoId));
-  });
+  render('todo-container', todoList.tasksHtml(todoId));
 };
 
 const updateTitleItems = function () {
-  sendGetRequest('todoList', (responseText) => {
-    const todoList = TodoList.load(responseText);
-    render('nav-items', todoList.titlesHtml());
+  render('nav-items', todoList.titlesHtml());
 
-    const lastTodo = todoList.lastTodo;
-    if (lastTodo) {
-      const lastTodoId = lastTodo.id;
-      const todoElement = document.querySelector(`#${lastTodoId}`);
-      todoElement.classList.add('clicked');
-      showTasks(lastTodoId);
-    }
-
-  });
+  const lastTodo = todoList.lastTodo;
+  if (lastTodo) {
+    const lastTodoId = lastTodo.id;
+    const todoElement = document.querySelector(`#${lastTodoId}`);
+    todoElement.classList.add('clicked');
+    showTasks(lastTodoId);
+  }
 };
 
 const addTodo = function () {
@@ -39,7 +36,12 @@ const addTodo = function () {
   }
   titleElement.value = '';
 
-  sendPostRequest('addTodo', titleText, 'text/plain', updateTitleItems);
+  sendPostRequest('addTodo', titleText, 'text/plain', () => {
+    sendGetRequest('todoList', (responseText) => {
+      todoList.update(responseText);
+      updateTitleItems();
+    });
+  });
 };
 
 const clickedTodo = function (event) {
@@ -50,6 +52,18 @@ const clickedTodo = function (event) {
 
   const todoId = todoElement.id;
   showTasks(todoId);
+};
+
+const removeTodo = function (event) {
+  const todoElement = event.target.parentElement;
+  const todoId = todoElement.id;
+
+  sendPostRequest('removeTodo', todoId, 'text/plain', () => {
+    sendGetRequest('todoList', (responseText) => {
+      todoList.update(responseText);
+      updateTitleItems(todoId);
+    });
+  });
 };
 
 const addTask = function () {
@@ -64,14 +78,12 @@ const addTask = function () {
   const todoId = clickedTodo.id;
   const requestText = JSON.stringify({todoId, taskText});
 
-  sendPostRequest('addTask', requestText, 'application/json', () => showTasks(todoId));
-};
-
-const removeTodo = function (event) {
-  const todoElement = event.target.parentElement;
-  const todoId = todoElement.id;
-  document.querySelector('#todo-Container').innerHTML = '';
-  sendPostRequest('removeTodo', todoId, 'text/plain', updateTitleItems);
+  sendPostRequest('addTask', requestText, 'application/json', () => {
+    sendGetRequest('todoList', (responseText) => {
+      todoList.update(responseText);
+      showTasks(todoId);
+    });
+  });
 };
 
 const removeTask = function (event) {
@@ -83,7 +95,12 @@ const removeTask = function (event) {
 
   const requestText = JSON.stringify({todoId, taskId});
 
-  sendPostRequest('removeTask', requestText, 'application/json', () => showTasks(todoId));
+  sendPostRequest('removeTask', requestText, 'application/json', () => {
+    sendGetRequest('todoList', (responseText) => {
+      todoList.update(responseText);
+      showTasks(todoId);
+    });
+  });
 };
 
 const updateStatus = function (event) {
@@ -102,5 +119,17 @@ const updateStatus = function (event) {
 
   const requestText = JSON.stringify({todoId, taskId, status});
 
-  sendPostRequest('updateTaskStatus', requestText, 'application/json', () => showTasks(todoId));
+  sendPostRequest('updateTaskStatus', requestText, 'application/json', () => {
+    sendGetRequest('todoList', (responseText) => {
+      todoList.update(responseText);
+      showTasks(todoId);
+    });
+  });
+};
+
+const loadPage = function () {
+  sendGetRequest('todoList', (responseText) => {
+    todoList.update(responseText);
+    updateTitleItems();
+  });
 };

@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 const taskHtml = function (task) {
+  const doneStatus = task.status ? 'checked' : '';
   return `
   <div class="task" id="${task.id}">
     <div>
-      <input type="checkbox" ${task.status ? 'checked' : ''} onclick="updateStatus(event);">
+      <input type="checkbox" ${doneStatus} onclick="updateStatus(event);">
       <label>${task.text}</label>
     </div>
     <a class='delete-link' onclick="removeTask(event)">X</a>
@@ -19,14 +21,12 @@ const titleHtml = function (todo) {
 };
 
 class TodoList {
-  constructor (todoList) {
-    this.todoList = todoList;
+  constructor () {
+    this.todoList = [];
   }
 
-  static load(content) {
-    const list = JSON.parse(content);
-    const todoList = new TodoList(list);
-    return todoList;
+  update(content) {
+    this.todoList = JSON.parse(content);
   }
 
   titlesHtml() {
@@ -39,7 +39,8 @@ class TodoList {
 
     const addTaskHtml = `
     <input id="task-text" type="text" placeholder="Enter Task" required>
-    <input id="task-button" type="button" value="Add Task" onclick="addTask();"/>`;
+    <input id="task-button" type="button" value="Add Task" onclick="addTask();">
+    `;
 
     const tasksHtml = todo.tasks ?
       todo.tasks.map((task) => taskHtml(task)).join('') : '';

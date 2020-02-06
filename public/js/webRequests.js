@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
 const sendGetRequest = function (url, callback) {
   const req = new XMLHttpRequest();
   req.onload = function () {
     const OK_STATUS = 200;
-    if (this.status == OK_STATUS) {
+    if (this.status === OK_STATUS) {
       callback(this.responseText);
     }
   };
@@ -14,7 +15,7 @@ const sendPostRequest = function (url, content, contentType, callback) {
   const req = new XMLHttpRequest();
   req.onload = function () {
     const CREATED_STATUS = 201;
-    if (this.status == CREATED_STATUS) {
+    if (this.status === CREATED_STATUS) {
       callback();
     }
   };
@@ -22,4 +23,3 @@ const sendPostRequest = function (url, content, contentType, callback) {
   req.setRequestHeader('Content-Type', contentType);
   req.send(content);
 };
-
