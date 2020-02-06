@@ -44,4 +44,8 @@ class TodoList {
 
     return tasksHtml + addTaskHtml;
   }
+
+  get lastTodo() {
+    return this.todoList[this.todoList.length - 1];
+  }
 }

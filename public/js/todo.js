@@ -7,10 +7,21 @@ const removeClassFromAll = function (className) {
   elements.forEach((element) => element.classList.remove(className));
 };
 
+const showTasks = function (todoId) {
+  sendGetRequest('todoList', (responseText) => {
+    const todoList = TodoList.load(responseText);
+    render('todo-container', todoList.tasksHtml(todoId));
+  });
+};
+
 const updateTitleItems = function () {
   sendGetRequest('todoList', (responseText) => {
     const todoList = TodoList.load(responseText);
+    const lastTodoId = todoList.lastTodo.id;
     render('nav-items', todoList.titlesHtml());
+    const todoElement = document.querySelector(`#${lastTodoId}`);
+    todoElement.classList.add('clicked');
+    showTasks(lastTodoId);
   });
 };
 
@@ -24,13 +35,6 @@ const addTodo = function () {
   titleElement.value = '';
 
   sendPostRequest('addTodo', titleText, 'text/plain', updateTitleItems);
-};
-
-const showTasks = function (todoId) {
-  sendGetRequest('todoList', (responseText) => {
-    const todoList = TodoList.load(responseText);
-    render('todo-container', todoList.tasksHtml(todoId));
-  });
 };
 
 const clickedTodo = function (event) {
@@ -94,4 +98,4 @@ const updateStatus = function (event) {
   const requestText = JSON.stringify({todoId, taskId, status});
 
   sendPostRequest('updateTaskStatus', requestText, 'application/json', () => showTasks(todoId));
-}
+};
