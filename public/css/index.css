@@ -15,6 +15,7 @@ body{
 
 .nav{
   border: 1px solid rgb(201, 201, 201);
+  border-right: none;
   height: 550px;
   width: 300px;
   padding-top: 20px;
@@ -56,11 +57,12 @@ body{
 .todo-title{
   cursor: pointer;
   color:black;
+  width: 250;
+  overflow: scroll;
 }
 
 #todo-container{
   border: 1px solid black;
-  border-left: none;
   width: 800px;
   padding: 50px;
 }
