@@ -1,9 +1,11 @@
 const taskHtml = function (task) {
   return `
   <div class="task" id="${task.id}">
-    <input type="checkbox" ${task.status ? 'checked' : ''} onclick="updateStatus(event);">
-    <label>${task.text}</label>
-    <a class='delete-link' onclick="removeTask(event)">Remove</a>
+    <div>
+      <input type="checkbox" ${task.status ? 'checked' : ''} onclick="updateStatus(event);">
+      <label>${task.text}</label>
+    </div>
+    <a class='delete-link' onclick="removeTask(event)">X</a>
   </div>
   <br>`;
 };
@@ -36,7 +38,7 @@ class TodoList {
     const todo = this.todoList.find((todo) => todo.id === id);
 
     const addTaskHtml = `
-    <input id="task-text" type="text" placeholder=" Enter Task" required>
+    <input id="task-text" type="text" placeholder="Enter Task" required>
     <input id="task-button" type="button" value="Add Task" onclick="addTask();"/>`;
 
     const tasksHtml = todo.tasks ?

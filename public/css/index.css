@@ -55,7 +55,7 @@ body{
 
 .todo-title{
   cursor: pointer;
-  color: rgb(164, 171, 177);
+  color:black;
 }
 
 #todo-container{
@@ -76,14 +76,17 @@ body{
 
 .task{
   font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .delete-link{
   font-size: 15px;
   cursor: pointer;
-  color: rgb(155, 166, 228);
+  color: rgb(235, 100, 100);
 }
 
 .clicked{
-  background-color: rgb(235, 216, 190);
+  background-color: rgb(139, 174, 240);
 }

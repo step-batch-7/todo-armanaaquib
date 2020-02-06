@@ -17,11 +17,16 @@ const showTasks = function (todoId) {
 const updateTitleItems = function () {
   sendGetRequest('todoList', (responseText) => {
     const todoList = TodoList.load(responseText);
-    const lastTodoId = todoList.lastTodo.id;
     render('nav-items', todoList.titlesHtml());
-    const todoElement = document.querySelector(`#${lastTodoId}`);
-    todoElement.classList.add('clicked');
-    showTasks(lastTodoId);
+
+    const lastTodo = todoList.lastTodo;
+    if (lastTodo) {
+      const lastTodoId = lastTodo.id;
+      const todoElement = document.querySelector(`#${lastTodoId}`);
+      todoElement.classList.add('clicked');
+      showTasks(lastTodoId);
+    }
+
   });
 };
 
@@ -84,7 +89,7 @@ const removeTask = function (event) {
 const updateStatus = function (event) {
   const statusElement = event.target;
 
-  const taskElement = statusElement.parentElement;
+  const taskElement = statusElement.parentElement.parentElement;
   const taskId = taskElement.id;
 
   const clickedTodo = document.querySelector('.clicked');
