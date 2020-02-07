@@ -24,7 +24,7 @@ const updateTitleItems = function () {
   const lastTodo = todoList.lastTodo;
   if (lastTodo) {
     const lastTodoId = lastTodo.id;
-    const todoElement = document.querySelector(`#${lastTodoId}`);
+    const todoElement = document.getElementById(`${lastTodoId}`);
     todoElement.classList.add('clicked');
     showTasks(lastTodoId);
   }
@@ -79,7 +79,7 @@ const addTask = function () {
 
   const clickedTodo = document.querySelector('.clicked');
   const todoId = clickedTodo.id;
-  const body = `todoId=${todoId}&taskText=${taskText}`;
+  const body = `todoListId=${todoId}&taskText=${taskText}`;
 
   sendPostRequest('addTask', body, () => {
     sendGetRequest('todoList', (responseText) => {
@@ -96,7 +96,7 @@ const removeTask = function (event) {
   const clickedTodo = document.querySelector('.clicked');
   const todoId = clickedTodo.id;
 
-  const body = `todoId=${todoId}&taskId=${taskId}`;
+  const body = `todoListId=${todoId}&taskId=${taskId}`;
 
   sendPostRequest('removeTask', body, () => {
     sendGetRequest('todoList', (responseText) => {
@@ -120,7 +120,7 @@ const updateStatus = function (event) {
     status = true;
   }
 
-  const body = `todoId=${todoId}&taskId=${taskId}&status=${status}`;
+  const body = `todoListId=${todoId}&taskId=${taskId}&status=${status}`;
 
   sendPostRequest('updateTaskStatus', body, () => {
     sendGetRequest('todoList', (responseText) => {

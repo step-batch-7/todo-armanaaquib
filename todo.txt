@@ -26,4 +26,13 @@ and will render it to page
 
 --done--will give id to todo while adding
 
-will add task
+refactor: 
+todo.js
+handlers.js
+todoList.js
+js/todo.js
+
+config
+tests
+
+new features
