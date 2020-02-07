@@ -4,8 +4,11 @@ const render = function (id, html) {
   document.querySelector(`#${id}`).innerHTML = html;
 };
 
+const getElementById = (id) => document.querySelector(`#${id}`);
+const getElementsByClass = (className) => document.querySelectorAll(`.${className}`);
+
 const removeClassFromAll = function (className) {
-  const elements = document.querySelectorAll(`.${className}`);
+  const elements = getElementsByClass(className);
   elements.forEach((element) => element.classList.remove(className));
 };
 
@@ -13,18 +16,18 @@ const todoListCollection = new TodoListCollection();
 
 const showTasks = function (todoListId) {
   render('todo-container', todoListCollection.tasksHtml(todoListId));
-  const taskItems = document.querySelector('#tasks-container');
+  const taskItems = getElementById('tasks-container');
   taskItems.scrollTop = taskItems.scrollHeight;
 };
 
 const updateTitleItems = function () {
   render('nav-items', todoListCollection.titlesHtml());
-  document.querySelector('#nav-items').scroll(0, 0);
+  getElementById('nav-items').scroll(0, 0);
 
   const lastTodoList = todoListCollection.lastTodoList;
   if (lastTodoList) {
     const lastTodoListId = lastTodoList.id;
-    const todoListElement = document.querySelector(`#${lastTodoListId}`);
+    const todoListElement = getElementById(lastTodoListId);
     todoListElement.classList.add('clicked');
     showTasks(lastTodoListId);
   }
@@ -38,7 +41,7 @@ const update = function (callback) {
 };
 
 const addTodo = function () {
-  const titleElement = document.querySelector('#title-text');
+  const titleElement = getElementById('title-text');
   const titleText = titleElement.value;
 
   if (titleText === '') {
@@ -71,14 +74,14 @@ const removeTodo = function (event) {
 };
 
 const addTask = function () {
-  const taskElement = document.querySelector('#task-text');
+  const taskElement = getElementById('task-text');
   const taskText = taskElement.value;
 
   if (taskText === '') {
     return;
   }
 
-  const clickedTodoList = document.querySelector('.clicked');
+  const clickedTodoList = getElementsByClass('clicked')[0];
   const todoListId = clickedTodoList.id;
   const body = JSON.stringify({todoListId, taskText});
 
@@ -91,7 +94,7 @@ const removeTask = function (event) {
   const taskElement = event.target.parentElement;
   const taskId = taskElement.id;
 
-  const clickedTodoList = document.querySelector('.clicked');
+  const clickedTodoList = getElementsByClass('clicked')[0];
   const todoListId = clickedTodoList.id;
 
   const body = JSON.stringify({todoListId, taskId});
@@ -107,7 +110,7 @@ const updateStatus = function (event) {
   const taskElement = statusElement.parentElement.parentElement;
   const taskId = taskElement.id;
 
-  const clickedTodoList = document.querySelector('.clicked');
+  const clickedTodoList = getElementsByClass('clicked')[0];
   const todoListId = clickedTodoList.id;
 
   let status = false;
