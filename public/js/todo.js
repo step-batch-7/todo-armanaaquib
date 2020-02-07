@@ -30,6 +30,13 @@ const updateTitleItems = function () {
   }
 };
 
+const update = function (callback) {
+  sendGetRequest('todoList', (responseText) => {
+    todoListCollection.update(responseText);
+    callback();
+  });
+};
+
 const addTodo = function () {
   const titleElement = document.querySelector('#title-text');
   const titleText = titleElement.value;
@@ -40,10 +47,7 @@ const addTodo = function () {
   titleElement.value = '';
 
   sendPostRequest('addTodo', JSON.stringify({titleText}), 'application/json', () => {
-    sendGetRequest('todoList', (responseText) => {
-      todoListCollection.update(responseText);
-      updateTitleItems();
-    });
+    update(updateTitleItems);
   });
 };
 
@@ -62,10 +66,7 @@ const removeTodo = function (event) {
   const todoListId = todoElement.id;
 
   sendPostRequest('removeTodo', JSON.stringify({todoListId}), 'application/json', () => {
-    sendGetRequest('todoList', (responseText) => {
-      todoListCollection.update(responseText);
-      updateTitleItems(todoListId);
-    });
+    update(updateTitleItems);
   });
 };
 
@@ -82,10 +83,7 @@ const addTask = function () {
   const body = JSON.stringify({todoListId, taskText});
 
   sendPostRequest('addTask', body, 'application/json', () => {
-    sendGetRequest('todoList', (responseText) => {
-      todoListCollection.update(responseText);
-      showTasks(todoListId);
-    });
+    update(showTasks.bind(null, todoListId));
   });
 };
 
@@ -99,10 +97,7 @@ const removeTask = function (event) {
   const body = JSON.stringify({todoListId, taskId});
 
   sendPostRequest('removeTask', body, 'application/json', () => {
-    sendGetRequest('todoList', (responseText) => {
-      todoListCollection.update(responseText);
-      showTasks(todoListId);
-    });
+    update(showTasks.bind(null, todoListId));
   });
 };
 
@@ -123,10 +118,7 @@ const updateStatus = function (event) {
   const body = JSON.stringify({todoListId, taskId, status});
 
   sendPostRequest('updateTaskStatus', body, 'application/json', () => {
-    sendGetRequest('todoList', (responseText) => {
-      todoListCollection.update(responseText);
-      showTasks(todoListId);
-    });
+    update(showTasks.bind(null, todoListId));
   });
 };
 
