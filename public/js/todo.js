@@ -39,7 +39,7 @@ const addTodo = function () {
   }
   titleElement.value = '';
 
-  sendPostRequest('addTodo', titleText, 'text/plain', () => {
+  sendPostRequest('addTodo', `titleText=${titleText}`, () => {
     sendGetRequest('todoList', (responseText) => {
       todoList.update(responseText);
       updateTitleItems();
@@ -61,7 +61,7 @@ const removeTodo = function (event) {
   const todoElement = event.target.parentElement;
   const todoId = todoElement.id;
 
-  sendPostRequest('removeTodo', todoId, 'text/plain', () => {
+  sendPostRequest('removeTodo', `todoId=${todoId}`, () => {
     sendGetRequest('todoList', (responseText) => {
       todoList.update(responseText);
       updateTitleItems(todoId);
@@ -79,9 +79,9 @@ const addTask = function () {
 
   const clickedTodo = document.querySelector('.clicked');
   const todoId = clickedTodo.id;
-  const requestText = JSON.stringify({todoId, taskText});
+  const body = `todoId=${todoId}&taskText=${taskText}`;
 
-  sendPostRequest('addTask', requestText, 'application/json', () => {
+  sendPostRequest('addTask', body, () => {
     sendGetRequest('todoList', (responseText) => {
       todoList.update(responseText);
       showTasks(todoId);
@@ -96,9 +96,9 @@ const removeTask = function (event) {
   const clickedTodo = document.querySelector('.clicked');
   const todoId = clickedTodo.id;
 
-  const requestText = JSON.stringify({todoId, taskId});
+  const body = `todoId=${todoId}&taskId=${taskId}`;
 
-  sendPostRequest('removeTask', requestText, 'application/json', () => {
+  sendPostRequest('removeTask', body, () => {
     sendGetRequest('todoList', (responseText) => {
       todoList.update(responseText);
       showTasks(todoId);
@@ -120,9 +120,9 @@ const updateStatus = function (event) {
     status = true;
   }
 
-  const requestText = JSON.stringify({todoId, taskId, status});
+  const body = `todoId=${todoId}&taskId=${taskId}&status=${status}`;
 
-  sendPostRequest('updateTaskStatus', requestText, 'application/json', () => {
+  sendPostRequest('updateTaskStatus', body, () => {
     sendGetRequest('todoList', (responseText) => {
       todoList.update(responseText);
       showTasks(todoId);
