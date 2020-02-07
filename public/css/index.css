@@ -16,18 +16,17 @@ body{
 .nav{
   border: 1px solid rgb(201, 201, 201);
   border-right: none;
-  height: 550px;
+  height: 560px;
   width: 300px;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 #title-text{
   width: 220px;
-  height: 30px;
   border: none;
   outline: none;
-  border-bottom: 2px solid darkseagreen;
-  font-size: 20px;
+  border-bottom: 1px solid darkseagreen;
+  font-size: 30px;
 }
 
 #title-button{
@@ -39,6 +38,7 @@ body{
 #nav-items{  
   overflow: scroll;
   height: 520px;
+  border-bottom: 1px solid black;
 }
 
 .nav-item{
@@ -64,7 +64,7 @@ body{
 #todo-container{
   border: 1px solid black;
   width: 800px;
-  height: 470px;
+  height: 550px;
   padding: 10px 30px 10px 30px;
   overflow: scroll;
 }
