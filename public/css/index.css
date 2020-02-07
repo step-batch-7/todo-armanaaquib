@@ -15,7 +15,7 @@ body{
 
 .nav{
   border: 1px solid rgb(201, 201, 201);
-  border-right: none;
+  /* border-right: none; */
   height: 560px;
   width: 300px;
   padding-top: 10px;
@@ -70,10 +70,10 @@ body{
 }
 
 #todo-container{
-  border: 1px solid black;
+  /* border: 1px solid black; */
   width: 800px;
   height: 550px;
-  padding: 10px 10px 10px 20px;
+  padding: 10px 10px 10px 30px;
 
 }
 

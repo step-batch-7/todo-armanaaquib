@@ -11,7 +11,7 @@ const sendGetRequest = function (url, callback) {
   req.send();
 };
 
-const sendPostRequest = function (url, body, callback) {
+const sendPostRequest = function (url, body, contentType, callback) {
   const req = new XMLHttpRequest();
   req.onload = function () {
     const CREATED_STATUS = 201;
@@ -20,5 +20,6 @@ const sendPostRequest = function (url, body, callback) {
     }
   };
   req.open('POST', url);
+  req.setRequestHeader('Content-Type', contentType);
   req.send(body);
 };

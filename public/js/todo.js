@@ -11,8 +11,8 @@ const removeClassFromAll = function (className) {
 
 const todoListCollection = new TodoListCollection();
 
-const showTasks = function (todoId) {
-  render('todo-container', todoListCollection.tasksHtml(todoId));
+const showTasks = function (todoListId) {
+  render('todo-container', todoListCollection.tasksHtml(todoListId));
   const taskItems = document.querySelector('#tasks-container');
   taskItems.scrollTop = taskItems.scrollHeight;
 };
@@ -39,7 +39,7 @@ const addTodo = function () {
   }
   titleElement.value = '';
 
-  sendPostRequest('addTodo', `titleText=${titleText}`, () => {
+  sendPostRequest('addTodo', JSON.stringify({titleText}), 'application/json', () => {
     sendGetRequest('todoList', (responseText) => {
       todoListCollection.update(responseText);
       updateTitleItems();
@@ -53,18 +53,18 @@ const clickedTodo = function (event) {
   removeClassFromAll('clicked');
   todoElement.classList.add('clicked');
 
-  const todoId = todoElement.id;
-  showTasks(todoId);
+  const todoListId = todoElement.id;
+  showTasks(todoListId);
 };
 
 const removeTodo = function (event) {
   const todoElement = event.target.parentElement;
-  const todoId = todoElement.id;
+  const todoListId = todoElement.id;
 
-  sendPostRequest('removeTodo', `todoId=${todoId}`, () => {
+  sendPostRequest('removeTodo', JSON.stringify({todoListId}), 'application/json', () => {
     sendGetRequest('todoList', (responseText) => {
       todoListCollection.update(responseText);
-      updateTitleItems(todoId);
+      updateTitleItems(todoListId);
     });
   });
 };
@@ -77,14 +77,14 @@ const addTask = function () {
     return;
   }
 
-  const clickedTodo = document.querySelector('.clicked');
-  const todoId = clickedTodo.id;
-  const body = `todoListId=${todoId}&taskText=${taskText}`;
+  const clickedTodoList = document.querySelector('.clicked');
+  const todoListId = clickedTodoList.id;
+  const body = JSON.stringify({todoListId, taskText});
 
-  sendPostRequest('addTask', body, () => {
+  sendPostRequest('addTask', body, 'application/json', () => {
     sendGetRequest('todoList', (responseText) => {
       todoListCollection.update(responseText);
-      showTasks(todoId);
+      showTasks(todoListId);
     });
   });
 };
@@ -93,15 +93,15 @@ const removeTask = function (event) {
   const taskElement = event.target.parentElement;
   const taskId = taskElement.id;
 
-  const clickedTodo = document.querySelector('.clicked');
-  const todoId = clickedTodo.id;
+  const clickedTodoList = document.querySelector('.clicked');
+  const todoListId = clickedTodoList.id;
 
-  const body = `todoListId=${todoId}&taskId=${taskId}`;
+  const body = JSON.stringify({todoListId, taskId});
 
-  sendPostRequest('removeTask', body, () => {
+  sendPostRequest('removeTask', body, 'application/json', () => {
     sendGetRequest('todoList', (responseText) => {
       todoListCollection.update(responseText);
-      showTasks(todoId);
+      showTasks(todoListId);
     });
   });
 };
@@ -112,20 +112,20 @@ const updateStatus = function (event) {
   const taskElement = statusElement.parentElement.parentElement;
   const taskId = taskElement.id;
 
-  const clickedTodo = document.querySelector('.clicked');
-  const todoId = clickedTodo.id;
+  const clickedTodoList = document.querySelector('.clicked');
+  const todoListId = clickedTodoList.id;
 
   let status = false;
   if (statusElement.checked) {
     status = true;
   }
 
-  const body = `todoListId=${todoId}&taskId=${taskId}&status=${status}`;
+  const body = JSON.stringify({todoListId, taskId, status});
 
-  sendPostRequest('updateTaskStatus', body, () => {
+  sendPostRequest('updateTaskStatus', body, 'application/json', () => {
     sendGetRequest('todoList', (responseText) => {
       todoListCollection.update(responseText);
-      showTasks(todoId);
+      showTasks(todoListId);
     });
   });
 };
