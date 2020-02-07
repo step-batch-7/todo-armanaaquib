@@ -13,10 +13,13 @@ const todoList = new TodoList();
 
 const showTasks = function (todoId) {
   render('todo-container', todoList.tasksHtml(todoId));
+  const taskItems = document.querySelector('#tasks-container');
+  taskItems.scrollTop = taskItems.scrollHeight;
 };
 
 const updateTitleItems = function () {
   render('nav-items', todoList.titlesHtml());
+  document.querySelector('#nav-items').scroll(0, 0);
 
   const lastTodo = todoList.lastTodo;
   if (lastTodo) {

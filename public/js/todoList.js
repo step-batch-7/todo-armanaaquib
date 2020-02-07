@@ -37,15 +37,24 @@ class TodoList {
   tasksHtml(id) {
     const todo = this.todoList.find((todo) => todo.id === id);
 
+    const searchBarHtml = `
+    <input id="task-search" type="text" placeholder="Search Task" required>
+    `;
+
     const addTaskHtml = `
     <input id="task-text" type="text" placeholder="Enter Task" required>
     <input id="task-button" type="button" value="Add Task" onclick="addTask();">
     `;
 
-    const tasksHtml = todo.tasks ?
+    let tasksHtml = todo.tasks ?
       todo.tasks.map((task) => taskHtml(task)).join('') : '';
 
-    return tasksHtml + addTaskHtml;
+    tasksHtml = `
+    <div id="tasks-container">
+      ${tasksHtml}
+    </div>`;
+
+    return searchBarHtml + tasksHtml + addTaskHtml;
   }
 
   get lastTodo() {
