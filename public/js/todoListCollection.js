@@ -20,22 +20,22 @@ const titleHtml = function (todo) {
   </div>`;
 };
 
-class TodoList {
+class TodoListCollection {
   constructor () {
-    this.todoList = [];
+    this.todoLists = [];
   }
 
   update(content) {
-    this.todoList = JSON.parse(content);
+    this.todoLists = JSON.parse(content);
   }
 
   titlesHtml() {
-    const reverseTodoList = this.todoList.slice().reverse();
-    return reverseTodoList.map((todo) => titleHtml(todo)).join('');
+    const reverseTodoLists = this.todoLists.slice().reverse();
+    return reverseTodoLists.map((todo) => titleHtml(todo)).join('');
   }
 
   tasksHtml(id) {
-    const todo = this.todoList.find((todo) => todo.id === id);
+    const todo = this.todoLists.find((todo) => todo.id === id);
 
     const searchBarHtml = `
     <input id="task-search" type="text" placeholder="Search Task" required>
@@ -57,7 +57,7 @@ class TodoList {
     return searchBarHtml + tasksHtml + addTaskHtml;
   }
 
-  get lastTodo() {
-    return this.todoList[this.todoList.length - 1];
+  get lastTodoList() {
+    return this.todoLists[this.todoLists.length - 1];
   }
 }

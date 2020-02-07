@@ -9,24 +9,24 @@ const removeClassFromAll = function (className) {
   elements.forEach((element) => element.classList.remove(className));
 };
 
-const todoList = new TodoList();
+const todoListCollection = new TodoListCollection();
 
 const showTasks = function (todoId) {
-  render('todo-container', todoList.tasksHtml(todoId));
+  render('todo-container', todoListCollection.tasksHtml(todoId));
   const taskItems = document.querySelector('#tasks-container');
   taskItems.scrollTop = taskItems.scrollHeight;
 };
 
 const updateTitleItems = function () {
-  render('nav-items', todoList.titlesHtml());
+  render('nav-items', todoListCollection.titlesHtml());
   document.querySelector('#nav-items').scroll(0, 0);
 
-  const lastTodo = todoList.lastTodo;
-  if (lastTodo) {
-    const lastTodoId = lastTodo.id;
-    const todoElement = document.getElementById(`${lastTodoId}`);
-    todoElement.classList.add('clicked');
-    showTasks(lastTodoId);
+  const lastTodoList = todoListCollection.lastTodoList;
+  if (lastTodoList) {
+    const lastTodoListId = lastTodoList.id;
+    const todoListElement = document.querySelector(`#${lastTodoListId}`);
+    todoListElement.classList.add('clicked');
+    showTasks(lastTodoListId);
   }
 };
 
@@ -41,7 +41,7 @@ const addTodo = function () {
 
   sendPostRequest('addTodo', `titleText=${titleText}`, () => {
     sendGetRequest('todoList', (responseText) => {
-      todoList.update(responseText);
+      todoListCollection.update(responseText);
       updateTitleItems();
     });
   });
@@ -63,7 +63,7 @@ const removeTodo = function (event) {
 
   sendPostRequest('removeTodo', `todoId=${todoId}`, () => {
     sendGetRequest('todoList', (responseText) => {
-      todoList.update(responseText);
+      todoListCollection.update(responseText);
       updateTitleItems(todoId);
     });
   });
@@ -83,7 +83,7 @@ const addTask = function () {
 
   sendPostRequest('addTask', body, () => {
     sendGetRequest('todoList', (responseText) => {
-      todoList.update(responseText);
+      todoListCollection.update(responseText);
       showTasks(todoId);
     });
   });
@@ -100,7 +100,7 @@ const removeTask = function (event) {
 
   sendPostRequest('removeTask', body, () => {
     sendGetRequest('todoList', (responseText) => {
-      todoList.update(responseText);
+      todoListCollection.update(responseText);
       showTasks(todoId);
     });
   });
@@ -124,7 +124,7 @@ const updateStatus = function (event) {
 
   sendPostRequest('updateTaskStatus', body, () => {
     sendGetRequest('todoList', (responseText) => {
-      todoList.update(responseText);
+      todoListCollection.update(responseText);
       showTasks(todoId);
     });
   });
@@ -132,7 +132,7 @@ const updateStatus = function (event) {
 
 const loadPage = function () {
   sendGetRequest('todoList', (responseText) => {
-    todoList.update(responseText);
+    todoListCollection.update(responseText);
     updateTitleItems();
   });
 };
