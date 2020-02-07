@@ -6,6 +6,7 @@ const render = function (id, html) {
 
 const getElementById = (id) => document.querySelector(`#${id}`);
 const getElementsByClass = (className) => document.querySelectorAll(`.${className}`);
+const getClickedTodoListElement = () => getElementsByClass('clicked')[0];
 
 const removeClassFromAll = function (className) {
   const elements = getElementsByClass(className);
@@ -81,8 +82,8 @@ const addTask = function () {
     return;
   }
 
-  const clickedTodoList = getElementsByClass('clicked')[0];
-  const todoListId = clickedTodoList.id;
+  const clickedTodoListElement = getClickedTodoListElement();
+  const todoListId = clickedTodoListElement.id;
   const body = JSON.stringify({todoListId, taskText});
 
   sendPostRequest('addTask', body, 'application/json', () => {
@@ -94,8 +95,8 @@ const removeTask = function (event) {
   const taskElement = event.target.parentElement;
   const taskId = taskElement.id;
 
-  const clickedTodoList = getElementsByClass('clicked')[0];
-  const todoListId = clickedTodoList.id;
+  const clickedTodoListElement = getClickedTodoListElement();
+  const todoListId = clickedTodoListElement.id;
 
   const body = JSON.stringify({todoListId, taskId});
 
@@ -110,8 +111,8 @@ const updateStatus = function (event) {
   const taskElement = statusElement.parentElement.parentElement;
   const taskId = taskElement.id;
 
-  const clickedTodoList = getElementsByClass('clicked')[0];
-  const todoListId = clickedTodoList.id;
+  const clickedTodoListElement = getClickedTodoListElement();
+  const todoListId = clickedTodoListElement.id;
 
   let status = false;
   if (statusElement.checked) {
