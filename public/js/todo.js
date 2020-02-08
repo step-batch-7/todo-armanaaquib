@@ -1,12 +1,12 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-const render = function (id, html) {
+const renderById = function (id, html) {
   document.querySelector(`#${id}`).innerHTML = html;
 };
 
 const getElementById = (id) => document.querySelector(`#${id}`);
 const getElementsByClass = (className) => document.querySelectorAll(`.${className}`);
-const getClickedTodoListElement = () => getElementsByClass('clicked')[0];
+const addClass = (element, className) => element.classList.add(className);
 
 const removeClassFromAll = function (className) {
   const elements = getElementsByClass(className);
@@ -16,22 +16,33 @@ const removeClassFromAll = function (className) {
 const todoListCollection = new TodoListCollection();
 
 const showTasks = function (todoListId) {
-  render('todo-container', todoListCollection.tasksHtml(todoListId));
+  renderById('todo-container', todoListCollection.tasksHtml(todoListId));
   const taskItems = getElementById('tasks-container');
   taskItems.scrollTop = taskItems.scrollHeight;
 };
 
 const updateTitleItems = function () {
-  render('nav-items', todoListCollection.titlesHtml());
-  getElementById('nav-items').scroll(0, 0);
+  renderById('nav-items', todoListCollection.titlesHtml());
 
-  const lastTodoList = todoListCollection.lastTodoList;
-  if (lastTodoList) {
-    const lastTodoListId = lastTodoList.id;
-    const todoListElement = getElementById(lastTodoListId);
-    todoListElement.classList.add('clicked');
-    showTasks(lastTodoListId);
+  const lastTodoListId = todoListCollection.lastTodoListId;
+  if (lastTodoListId) {
+    const lastTodoListElement = getElementById(lastTodoListElement);
+    addClass(lastTodoListElement, 'clicked');
+    showTasks(selectedTodoListId);
   }
+
+  getElementById('nav-items').scroll(0, 0);
+};
+
+const clickedTodo = function (event) {
+  const todoListElement = event.target.parentElement;
+
+  removeClassFromAll('clicked');
+  addClass(todoListElement, 'clicked');
+
+  const todoListId = todoListElement.id;
+  todoListCollection.selectedTodoListId = todoListId;
+  showTasks(todoListId);
 };
 
 const update = function (callback) {
@@ -50,26 +61,18 @@ const addTodo = function () {
   }
   titleElement.value = '';
 
-  sendPostRequest('addTodo', JSON.stringify({titleText}), 'application/json', () => {
+  const body = JSON.stringify({titleText});
+  sendPostRequest('addTodo', body, 'application/json', () => {
     update(updateTitleItems);
   });
 };
 
-const clickedTodo = function (event) {
-  const todoElement = event.target.parentElement;
-
-  removeClassFromAll('clicked');
-  todoElement.classList.add('clicked');
-
-  const todoListId = todoElement.id;
-  showTasks(todoListId);
-};
-
 const removeTodo = function (event) {
-  const todoElement = event.target.parentElement;
-  const todoListId = todoElement.id;
+  const removedTodoListElement = event.target.parentElement;
+  const removedTodoListId = removedTodoListElement.id;
 
-  sendPostRequest('removeTodo', JSON.stringify({todoListId}), 'application/json', () => {
+  const body = JSON.stringify({todoListId: removedTodoListId});
+  sendPostRequest('removeTodo', body, 'application/json', () => {
     update(updateTitleItems);
   });
 };
@@ -82,8 +85,8 @@ const addTask = function () {
     return;
   }
 
-  const clickedTodoListElement = getClickedTodoListElement();
-  const todoListId = clickedTodoListElement.id;
+  const selectedTodoListElement = getElementById(todoListCollection.selectedTodoListId);
+  const todoListId = selectedTodoListElement.id;
   const body = JSON.stringify({todoListId, taskText});
 
   sendPostRequest('addTask', body, 'application/json', () => {
@@ -111,24 +114,27 @@ const updateStatus = function (event) {
   const taskElement = statusElement.parentElement.parentElement;
   const taskId = taskElement.id;
 
-  const clickedTodoListElement = getClickedTodoListElement();
-  const todoListId = clickedTodoListElement.id;
+  const selectedTodoListId = todoListCollection.selectedTodoListId;
 
   let status = false;
   if (statusElement.checked) {
     status = true;
   }
 
-  const body = JSON.stringify({todoListId, taskId, status});
+  const body = JSON.stringify({todoListId: selectedTodoListId, taskId, status});
 
   sendPostRequest('updateTaskStatus', body, 'application/json', () => {
-    update(showTasks.bind(null, todoListId));
+    update(showTasks.bind(null, selectedTodoListId));
   });
 };
 
 const loadPage = function () {
   sendGetRequest('todoList', (responseText) => {
     todoListCollection.update(responseText);
+
+    const lastTodoListId = todoListCollection.lastTodoListId;
+    todoListCollection.selectedTodoListId = lastTodoListId;
+
     updateTitleItems();
   });
 };

@@ -12,10 +12,10 @@ const taskHtml = function (task) {
   <br>`;
 };
 
-const titleHtml = function (todo) {
+const titleHtml = function (todoList) {
   return `
-  <div class="nav-item" id="${todo.id}">
-    <h2 class="todo-title" onclick="clickedTodo(event);">${todo.title}</h2>
+  <div class="nav-item" id="${todoList.id}">
+    <h2 class="todo-title" onclick="clickedTodo(event);">${todoList.title}</h2>
     <a class='delete-link' onclick="removeTodo(event)">X</a>
   </div>`;
 };
@@ -23,10 +23,16 @@ const titleHtml = function (todo) {
 class TodoListCollection {
   constructor () {
     this.todoLists = [];
+    this.currentTodoListId = '';
   }
 
   update(content) {
     this.todoLists = JSON.parse(content);
+  }
+
+  get lastTodoListId() {
+    const lastTodoList = this.todoLists[this.todoLists.length - 1];
+    return lastTodoList ? lastTodoList.id : '';
   }
 
   titlesHtml() {
@@ -55,9 +61,5 @@ class TodoListCollection {
     </div>`;
 
     return searchBarHtml + tasksHtml + addTaskHtml;
-  }
-
-  get lastTodoList() {
-    return this.todoLists[this.todoLists.length - 1];
   }
 }
