@@ -7,6 +7,7 @@ const renderById = function (id, html) {
 const getElementById = (id) => document.querySelector(`#${id}`);
 const getElementsByClass = (className) => document.querySelectorAll(`.${className}`);
 const addClass = (element, className) => element.classList.add(className);
+const getClickedTodoListElement = () => getElementsByClass('clicked')[0];
 
 const removeClassFromAll = function (className) {
   const elements = getElementsByClass(className);
@@ -23,15 +24,15 @@ const showTasks = function (todoListId) {
 
 const updateTitleItems = function () {
   renderById('nav-items', todoListCollection.titlesHtml());
+  getElementById('nav-items').scroll(0, 0);
 
   const lastTodoListId = todoListCollection.lastTodoListId;
   if (lastTodoListId) {
-    const lastTodoListElement = getElementById(lastTodoListElement);
+    const lastTodoListElement = getElementById(lastTodoListId);
     addClass(lastTodoListElement, 'clicked');
-    showTasks(selectedTodoListId);
+    showTasks(lastTodoListId);
   }
 
-  getElementById('nav-items').scroll(0, 0);
 };
 
 const clickedTodo = function (event) {
@@ -131,10 +132,6 @@ const updateStatus = function (event) {
 const loadPage = function () {
   sendGetRequest('todoList', (responseText) => {
     todoListCollection.update(responseText);
-
-    const lastTodoListId = todoListCollection.lastTodoListId;
-    todoListCollection.selectedTodoListId = lastTodoListId;
-
     updateTitleItems();
   });
 };
