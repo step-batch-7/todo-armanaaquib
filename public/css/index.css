@@ -70,16 +70,15 @@ body{
 }
 
 #todo-container{
-  /* border: 1px solid black; */
   width: 800px;
   height: 550px;
-  padding: 10px 10px 10px 30px;
-
+  padding: 10px 10px 10px 10px;
 }
 
 #tasks-container{
   height: 480px;
   padding: 10px 30px 10px 30px;
+  border: 0.5px solid rgb(191, 177, 177);
   overflow: scroll;
 }
 
@@ -89,16 +88,18 @@ body{
   border: none;
   outline: none;
   border-bottom: 1px solid darkseagreen;
-  font-size: 15px;
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 20px;
 }
 
 #task-search{
-  width: 800px;
+  width: 500px;
   height: 30px;
-  border: none;
   outline: none;
   border-bottom: 1px solid darkseagreen;
   font-size: 15px;
+  margin-left: 311px;
 }
 
 .task{

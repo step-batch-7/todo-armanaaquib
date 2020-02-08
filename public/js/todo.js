@@ -141,7 +141,16 @@ const updateStatus = function (event) {
 const filterTitle = function () {
   const searchText = getElementById('title-search').value;
 
-  renderById('nav-items', todoListCollection.filterTodoListHtml(searchText));
+  renderById('nav-items', todoListCollection.filterTodoListHtmlByTitle(searchText));
+  getElementById('nav-items').scroll(0, 0);
+
+  selectFirstTodoList();
+};
+
+const filterTask = function () {
+  const searchText = getElementById('task-search').value;
+
+  renderById('nav-items', todoListCollection.filterTodoListHtmlByTask(searchText));
   getElementById('nav-items').scroll(0, 0);
 
   selectFirstTodoList();

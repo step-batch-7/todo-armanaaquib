@@ -20,8 +20,12 @@ const titleHtml = function (todoList) {
   </div>`;
 };
 
-const isSearchedTitle = function (title, searchText) {
+const isSearchedTextTitle = function (title, searchText) {
   return title.toLowerCase().includes(searchText.toLowerCase());
+};
+
+const isSearchedTextTask = function (tasks, searchText) {
+  return tasks.some((task) => task.text.toLowerCase().includes(searchText.toLowerCase()));
 };
 
 class TodoListCollection {
@@ -34,15 +38,25 @@ class TodoListCollection {
     this.todoLists = JSON.parse(content);
   }
 
-  filterTodoLists(searchText) {
-    return this.todoLists.filter((todoList) => isSearchedTitle(todoList.title, searchText));
+  filterTodoListsByTitle(searchText) {
+    return this.todoLists.filter((todoList) => isSearchedTextTitle(todoList.title, searchText));
   }
 
-  filterTodoListHtml(searchText) {
-    const filterTodoLists = this.filterTodoLists(searchText);
+  filterTodoListsByTask(searchText) {
+    return this.todoLists.filter((todoList) => isSearchedTextTask(todoList.tasks, searchText));
+  }
+
+  filterTodoListHtmlByTitle(searchText) {
+    const filterTodoLists = this.filterTodoListsByTitle(searchText);
     const reverseFilterTodoLists = filterTodoLists.slice().reverse();
     return reverseFilterTodoLists.map((todoList) => titleHtml(todoList)).join('');
   }
+
+  filterTodoListHtmlByTask(searchText) {
+    const filterTodoLists = this.filterTodoListsByTask(searchText);
+    const reverseFilterTodoLists = filterTodoLists.slice().reverse();
+    return reverseFilterTodoLists.map((todoList) => titleHtml(todoList)).join('');
+  };
 
   titlesHtml() {
     const reverseTodoLists = this.todoLists.slice().reverse();
@@ -52,12 +66,8 @@ class TodoListCollection {
   tasksHtml(id) {
     const todo = this.todoLists.find((todo) => todo.id === id);
 
-    const searchBarHtml = `
-    <input id="task-search" type="text" placeholder="Search Task" required>
-    `;
-
     const addTaskHtml = `
-    <input id="task-text" type="text" placeholder="Enter Task" required>
+    <input id="task-text" type="text" placeholder="Enter Task">
     <input id="task-button" type="button" value="Add Task" onclick="addTask();">
     `;
 
@@ -69,6 +79,6 @@ class TodoListCollection {
       ${tasksHtml}
     </div>`;
 
-    return searchBarHtml + tasksHtml + addTaskHtml;
+    return tasksHtml + addTaskHtml;
   }
 }
