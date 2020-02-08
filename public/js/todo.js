@@ -9,6 +9,10 @@ const getElementsByClass = (className) => document.querySelectorAll(`.${classNam
 const addClass = (element, className) => element.classList.add(className);
 const getClickedTodoListElement = () => getElementsByClass('clicked')[0];
 
+const clearTitleSearchBar = () => {
+  getElementById('title-search').value = '';
+};
+
 const removeClassFromAll = function (className) {
   const elements = getElementsByClass(className);
   elements.forEach((element) => element.classList.remove(className));
@@ -22,17 +26,21 @@ const showTasks = function (todoListId) {
   taskItems.scrollTop = taskItems.scrollHeight;
 };
 
+const selectFirstTodoList = function () {
+  const firstTodoListElement = getElementsByClass('nav-item')[0];
+
+  if (firstTodoListElement) {
+    const firstTodoListId = firstTodoListElement.id;
+    addClass(firstTodoListElement, 'clicked');
+    showTasks(firstTodoListId);
+  }
+};
+
 const updateTitleItems = function () {
   renderById('nav-items', todoListCollection.titlesHtml());
   getElementById('nav-items').scroll(0, 0);
 
-  const lastTodoListId = todoListCollection.lastTodoListId;
-  if (lastTodoListId) {
-    const lastTodoListElement = getElementById(lastTodoListId);
-    addClass(lastTodoListElement, 'clicked');
-    showTasks(lastTodoListId);
-  }
-
+  selectFirstTodoList();
 };
 
 const clickedTodo = function (event) {
@@ -61,6 +69,7 @@ const addTodo = function () {
     return;
   }
   titleElement.value = '';
+  clearTitleSearchBar();
 
   const body = JSON.stringify({titleText});
   sendPostRequest('addTodo', body, 'application/json', () => {
@@ -74,7 +83,7 @@ const removeTodo = function (event) {
 
   const body = JSON.stringify({todoListId: removedTodoListId});
   sendPostRequest('removeTodo', body, 'application/json', () => {
-    update(updateTitleItems);
+    update(filterTitle);
   });
 };
 
@@ -86,7 +95,7 @@ const addTask = function () {
     return;
   }
 
-  const selectedTodoListElement = getElementById(todoListCollection.selectedTodoListId);
+  const selectedTodoListElement = getElementsByClass('clicked')[0];
   const todoListId = selectedTodoListElement.id;
   const body = JSON.stringify({todoListId, taskText});
 
@@ -127,6 +136,15 @@ const updateStatus = function (event) {
   sendPostRequest('updateTaskStatus', body, 'application/json', () => {
     update(showTasks.bind(null, selectedTodoListId));
   });
+};
+
+const filterTitle = function () {
+  const searchText = getElementById('title-search').value;
+
+  renderById('nav-items', todoListCollection.filterTodoListHtml(searchText));
+  getElementById('nav-items').scroll(0, 0);
+
+  selectFirstTodoList();
 };
 
 const loadPage = function () {

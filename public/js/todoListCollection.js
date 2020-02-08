@@ -20,6 +20,10 @@ const titleHtml = function (todoList) {
   </div>`;
 };
 
+const isSearchedTitle = function (title, searchText) {
+  return title.toLowerCase().includes(searchText.toLowerCase());
+};
+
 class TodoListCollection {
   constructor () {
     this.todoLists = [];
@@ -30,14 +34,19 @@ class TodoListCollection {
     this.todoLists = JSON.parse(content);
   }
 
-  get lastTodoListId() {
-    const lastTodoList = this.todoLists[this.todoLists.length - 1];
-    return lastTodoList ? lastTodoList.id : '';
+  filterTodoLists(searchText) {
+    return this.todoLists.filter((todoList) => isSearchedTitle(todoList.title, searchText));
+  }
+
+  filterTodoListHtml(searchText) {
+    const filterTodoLists = this.filterTodoLists(searchText);
+    const reverseFilterTodoLists = filterTodoLists.slice().reverse();
+    return reverseFilterTodoLists.map((todoList) => titleHtml(todoList)).join('');
   }
 
   titlesHtml() {
     const reverseTodoLists = this.todoLists.slice().reverse();
-    return reverseTodoLists.map((todo) => titleHtml(todo)).join('');
+    return reverseTodoLists.map((todoList) => titleHtml(todoList)).join('');
   }
 
   tasksHtml(id) {
