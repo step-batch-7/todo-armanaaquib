@@ -5,7 +5,7 @@ const taskHtml = function (task) {
   <div class="task" id="${task.id}">
     <div>
       <input type="checkbox" ${doneStatus} onclick="updateStatus(event);">
-      <label>${task.text}</label>
+      <label contentEditable="true" onblur="editTask(event);">${task.text}</label>
     </div>
     <a class='delete-link' onclick="removeTask(event)">X</a>
   </div>

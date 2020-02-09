@@ -95,7 +95,7 @@ const addTask = function () {
     return;
   }
 
-  const selectedTodoListElement = getElementsByClass('clicked')[0];
+  const selectedTodoListElement = getClickedTodoListElement();
   const todoListId = selectedTodoListElement.id;
   const body = JSON.stringify({todoListId, taskText});
 
@@ -124,17 +124,17 @@ const updateStatus = function (event) {
   const taskElement = statusElement.parentElement.parentElement;
   const taskId = taskElement.id;
 
-  const selectedTodoListId = todoListCollection.selectedTodoListId;
+  const todoListId = getClickedTodoListElement().id;
 
   let status = false;
   if (statusElement.checked) {
     status = true;
   }
 
-  const body = JSON.stringify({todoListId: selectedTodoListId, taskId, status});
+  const body = JSON.stringify({todoListId, taskId, status});
 
   sendPostRequest('updateTaskStatus', body, 'application/json', () => {
-    update(showTasks.bind(null, selectedTodoListId));
+    update(showTasks.bind(null, todoListId));
   });
 };
 
@@ -166,6 +166,20 @@ const editTitle = function (event) {
 
   sendPostRequest('editTitle', body, 'application/json', () => {
     update(updateTitleItems);
+  });
+};
+
+const editTask = function (event) {
+  const newText = event.target.innerText;
+  const taskId = event.target.parentElement.parentElement.id;
+
+  const selectedTodoListElement = getClickedTodoListElement();
+  const todoListId = selectedTodoListElement.id;
+
+  const body = JSON.stringify({todoListId, taskId, newText});
+
+  sendPostRequest('editTask', body, 'application/json', () => {
+    update(showTasks.bind(null, todoListId));
   });
 };
 
