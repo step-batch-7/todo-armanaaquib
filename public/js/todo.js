@@ -44,7 +44,7 @@ const updateTitleItems = function () {
 };
 
 const clickedTodo = function (event) {
-  const todoListElement = event.target.parentElement;
+  const todoListElement = event.target;
 
   removeClassFromAll('clicked');
   addClass(todoListElement, 'clicked');
@@ -154,6 +154,19 @@ const filterTask = function () {
   getElementById('nav-items').scroll(0, 0);
 
   selectFirstTodoList();
+};
+
+const editTitle = function (event) {
+  const newTitle = event.target.innerText;
+
+  const selectedTodoListElement = event.target.parentElement;
+  const todoListId = selectedTodoListElement.id;
+
+  const body = JSON.stringify({todoListId, newTitle});
+
+  sendPostRequest('editTitle', body, 'application/json', () => {
+    update(updateTitleItems);
+  });
 };
 
 const loadPage = function () {
