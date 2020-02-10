@@ -15,8 +15,8 @@ const taskHtml = function (task) {
 const titleHtml = function (todoList) {
   return `
   <div class="nav-item" id="${todoList.id}" onclick="clickedTodo(event);">
-    <h2 class="todo-title" contentEditable="true" onblur="editTitle(event);">${todoList.title}</h2>
-    <a class='delete-link' onclick="removeTodo(event)">X</a>
+    <h2 class="todo-title" id="${todoList.id}" contentEditable="true" onblur="editTitle(event);">${todoList.title}</h2>
+    <a class='delete-link' id="${todoList.id}" onclick="removeTodo(event)">X</a>
   </div>`;
 };
 
