@@ -183,6 +183,12 @@ const editTask = function (event) {
   });
 };
 
+const keyPressedForEdit = function (event) {
+  if (event.key === 'Enter') {
+    event.target.blur();
+  }
+};
+
 const loadPage = function () {
   sendGetRequest('todoList', (responseText) => {
     todoListCollection.update(responseText);
